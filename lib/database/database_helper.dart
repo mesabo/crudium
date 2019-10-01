@@ -25,6 +25,7 @@ class DatabaseHelper {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, "main.db");
     var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    return theDb;
   }
 
   void _onCreate(Database db, int version) async {
@@ -33,7 +34,7 @@ class DatabaseHelper {
         "CREATE TABLE User(id INTEGER PRIMARY KEY,firstName TEXT,latsName TEXT,dob TEXT)");
   }
 
-  Future<int> SaveUser(User user) async {
+  Future<int> saveUser(User user) async {
     var dbClient = await db;
     int res = await dbClient.insert("User", user.toMap());
     return res;
